@@ -12,6 +12,12 @@ class Puzzle:
         self.size = size
         self.board = self.make_board()
 
+    def move(self, direction):
+        """Return the tile that slid into the blank, or None if nothing moved."""
+        if self.solved() or direction not in DIRECTIONS:
+            return None
+        return self._slide(direction)
+
     def solved_board(self):
         n = self.size
         tiles = list(range(1, n * n)) + [0]
@@ -52,11 +58,6 @@ class Puzzle:
         tile = self.board[nr][nc]
         self.board[r][c], self.board[nr][nc] = tile, 0
         return tile
-
-    def move(self, direction):
-        if self.solved():          # locked once the puzzle is complete
-            return False
-        return self._slide(direction) is not None
 
     def solved(self):
         return self.board == self.solved_board()

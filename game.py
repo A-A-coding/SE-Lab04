@@ -49,12 +49,14 @@ class SlidingPuzzle:
             key = input("> ").strip().lower()
             if key == "q":
                 return
-            if key not in "wasd":
-                print("Use W/A/S/D.")
+            if key not in ("w", "a", "s", "d"):
+                print("Use W/A/S/D (or Q to quit).")
                 continue
-            if self.puzzle.move(key):
+            tile = self.puzzle.move(key)
+            if tile is None:
+                print("That move is not possible.")
+            else:
                 self.moves += 1
+                print(f"Slid tile {tile}.")
                 if self.puzzle.solved():
                     self.finished_at = time.monotonic()   # freeze the timer
-            else:
-                print("That move is not possible.")
