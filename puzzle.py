@@ -54,10 +54,9 @@ class Puzzle:
         return tile
 
     def move(self, direction):
-        """Return the tile that slid into the blank, or None if nothing moved."""
-        if self.solved() or direction not in DIRECTIONS:
-            return None
-        return self._slide(direction)
+        if self.solved():          # locked once the puzzle is complete
+            return False
+        return self._slide(direction) is not None
 
     def solved(self):
         return self.board == self.solved_board()
